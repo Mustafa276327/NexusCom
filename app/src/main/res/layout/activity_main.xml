@@ -1,51 +1,140 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:padding="16dp"
+    android:fillViewport="true"
     tools:context=".MainActivity">
 
-    <TextView
-        android:id="@+id/status_text"
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Nexus HTTP Sunucusu: DURDURULDU"
-        android:textColor="@color/purple_500"
-        android:textSize="18sp"
-        android:textStyle="bold"
-        android:layout_marginBottom="20dp"/>
+        android:orientation="vertical"
+        android:padding="20dp">
 
-    <Button
-        android:id="@+id/btn_start_server"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Sunucu Başlat"
-        android:layout_marginBottom="10dp"/>
+        <!-- ═════════ KURULUM SİHİRBAZI ═════════ -->
+        <LinearLayout
+            android:id="@+id/wizard_panel"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
 
-    <Button
-        android:id="@+id/btn_check_permissions"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="İzinleri Kontrol Et"
-        android:layout_marginBottom="10dp"/>
+            <TextView
+                android:id="@+id/wizard_baslik"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Kurulum Sihirbazı"
+                android:textColor="@color/purple_700"
+                android:textSize="22sp"
+                android:textStyle="bold"
+                android:layout_marginBottom="6dp" />
 
-    <Button
-        android:id="@+id/btn_open_settings"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Uygulama Ayarları"
-        android:layout_marginBottom="20dp"/>
+            <TextView
+                android:id="@+id/wizard_ilerleme"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Adım 1 / 6"
+                android:textColor="@color/purple_500"
+                android:textSize="13sp"
+                android:layout_marginBottom="16dp" />
 
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="NEXUS AI Asistanı Cihaz Köprüsü"
-        android:textColor="@color/purple_700"
-        android:textSize="14sp"
-        android:textStyle="italic"
-        android:gravity="center"/>
+            <TextView
+                android:id="@+id/wizard_ad"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="17sp"
+                android:textStyle="bold"
+                android:textColor="@android:color/black"
+                android:layout_marginBottom="6dp" />
 
-</LinearLayout>
+            <TextView
+                android:id="@+id/wizard_aciklama"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="14sp"
+                android:lineSpacingExtra="3dp"
+                android:textColor="#444444"
+                android:layout_marginBottom="18dp" />
+
+            <Button
+                android:id="@+id/wizard_btn_ver"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="İzin Ver"
+                android:layout_marginBottom="8dp" />
+
+            <Button
+                android:id="@+id/wizard_btn_atla"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Şimdilik Atla"
+                style="@style/Widget.AppCompat.Button.Borderless" />
+        </LinearLayout>
+
+        <!-- ═════════ ANA EKRAN (sihirbaz bitince) ═════════ -->
+        <LinearLayout
+            android:id="@+id/main_panel"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:visibility="gone">
+
+            <TextView
+                android:id="@+id/status_text"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Nexus HTTP Sunucusu: DURDURULDU"
+                android:textColor="@color/purple_500"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                android:layout_marginBottom="20dp" />
+
+            <Button
+                android:id="@+id/btn_start_server"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Sunucu Başlat"
+                android:layout_marginBottom="10dp" />
+
+            <Button
+                android:id="@+id/btn_check_permissions"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="İzinleri Kontrol Et"
+                android:layout_marginBottom="10dp" />
+
+            <Button
+                android:id="@+id/btn_open_settings"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Uygulama Ayarları"
+                android:layout_marginBottom="10dp" />
+
+            <Button
+                android:id="@+id/btn_wizard"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Kurulum Sihirbazını Tekrar Çalıştır"
+                style="@style/Widget.AppCompat.Button.Borderless"
+                android:layout_marginBottom="20dp" />
+
+            <TextView
+                android:id="@+id/izin_ozet"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="13sp"
+                android:textColor="#666666"
+                android:layout_marginBottom="16dp" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="NEXUS AI Asistanı Cihaz Köprüsü — Port 8090"
+                android:textColor="@color/purple_700"
+                android:textSize="14sp"
+                android:textStyle="italic"
+                android:gravity="center" />
+        </LinearLayout>
+
+    </LinearLayout>
+</ScrollView>

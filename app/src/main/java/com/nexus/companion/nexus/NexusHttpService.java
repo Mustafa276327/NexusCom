@@ -6,6 +6,7 @@ import android.app.PendingIntent;
 import android.app.Service;
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.ServiceInfo;
 import android.os.Build;
 import android.os.IBinder;
 import android.util.Log;
@@ -33,15 +34,33 @@ public class NexusHttpService extends Service {
         super.onCreate();
         Log.d(TAG, "NexusHttpService onCreate");
         createNotificationChannel();
-        startForeground(1001, createNotification("Nexus Companion", "HTTP sunucu başlatılıyor..."));
+        startAsForeground("HTTP sunucu başlatılıyor...");
     }
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
         Log.d(TAG, "NexusHttpService onStartCommand");
-        startForeground(1001, createNotification("Nexus Companion", "HTTP sunucu başlatılıyor..."));
+        startAsForeground("HTTP sunucu başlatılıyor...");
         startServer();
         return START_STICKY;
+    }
+
+    /**
+     * KRİTİK DÜZELTME: targetSdk 34'te dataSync FGS türü için tür açıkça
+     * belirtilmeli + manifest'te FOREGROUND_SERVICE_DATA_SYNC izni olmalı;
+     * aksi halde startForeground SecurityException ile çöküyordu.
+     */
+    private void startAsForeground(String content) {
+        try {
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+                startForeground(1001, createNotification("Nexus Companion", content),
+                        ServiceInfo.FOREGROUND_SERVICE_TYPE_DATA_SYNC);
+            } else {
+                startForeground(1001, createNotification("Nexus Companion", content));
+            }
+        } catch (Exception e) {
+            Log.e(TAG, "startForeground hatası: " + e.getMessage());
+        }
     }
 
     private void startServer() {
@@ -144,7 +163,7 @@ public class NexusHttpService extends Service {
     }
 
     private void updateNotification(String title, String content) {
-        startForeground(1001, createNotification(title, content));
+        startAsForeground(content);
     }
 
     @Override

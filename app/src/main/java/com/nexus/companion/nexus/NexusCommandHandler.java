@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.content.IntentFilter;
 import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.content.pm.PackageManager;
 import android.media.AudioManager;
 import android.net.Uri;
@@ -328,11 +329,19 @@ public class NexusCommandHandler {
 
         try {
             if (islem.equals("kilitle")) {
-                // Ekran kilidini koymak icin DevicePolicyManager gerekir
-                // Basit bir yontem:
-                return "{\"durum\": \"basarili\", \"mesaj\": \"Ekran kilidi komutu gonderildi\"}";
+                // Gerçek kilitleme: sihirbazdan etkinleştirilen cihaz yöneticisi
+                android.app.admin.DevicePolicyManager dpm =
+                        (android.app.admin.DevicePolicyManager) context.getSystemService(Context.DEVICE_POLICY_SERVICE);
+                android.content.ComponentName admin =
+                        new android.content.ComponentName(context, NexusDeviceAdmin.class);
+                if (dpm != null && dpm.isAdminActive(admin)) {
+                    dpm.lockNow();
+                    return "{\"durum\": \"basarili\", \"mesaj\": \"Ekran kilitlendi\"}";
+                }
+                return "{\"durum\": \"hata\", \"mesaj\": \"Cihaz yöneticisi etkin değil — Companion'da kurulum sihirbazını çalıştırın\"}";
             } else {
-                return "{\"durum\": \"basarili\", \"mesaj\": \"Ekran kilidi acildi\"}";
+                // Android güvenlik kısıtı: uygulamalar ekran kilidini AÇAMAZ
+                return "{\"durum\": \"hata\", \"mesaj\": \"Ekran kilidi açma Android tarafından uygulamalara kapalıdır\"}";
             }
         } catch (Exception e) {
             return "{\"durum\": \"hata\", \"mesaj\": \"Ekran kilidi basarisiz: " + e.getMessage() + "\"}";
@@ -387,11 +396,17 @@ public class NexusCommandHandler {
                 android.Manifest.permission.SEND_SMS,
                 android.Manifest.permission.RECEIVE_SMS,
                 android.Manifest.permission.READ_SMS,
+                android.Manifest.permission.READ_CALL_LOG,
                 android.Manifest.permission.READ_PHONE_STATE,
+                android.Manifest.permission.READ_CONTACTS,
+                android.Manifest.permission.ACCESS_FINE_LOCATION,
+                android.Manifest.permission.POST_NOTIFICATIONS,
                 android.Manifest.permission.QUERY_ALL_PACKAGES,
                 android.Manifest.permission.SYSTEM_ALERT_WINDOW,
                 android.Manifest.permission.WAKE_LOCK,
                 android.Manifest.permission.FOREGROUND_SERVICE,
+                android.Manifest.permission.FOREGROUND_SERVICE_DATA_SYNC,
+                android.Manifest.permission.RECEIVE_BOOT_COMPLETED,
                 android.Manifest.permission.INTERNET,
                 android.Manifest.permission.ACCESS_NETWORK_STATE
         };

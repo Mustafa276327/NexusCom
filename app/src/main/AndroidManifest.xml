@@ -7,6 +7,13 @@
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.WAKE_LOCK" />
     <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
+    <!-- KRİTİK DÜZELTME: targetSdk 34'te dataSync FGS bu izni şart koşar,
+         aksi halde startForeground SecurityException ile ÇÖKERDİ (runtime crash) -->
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE_DATA_SYNC" />
+    <!-- BootReceiver'ın gerçekten çalışması için (önce manifest'te yoktu) -->
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
+    <!-- Pil optimizasyonu muafiyeti (sihirbaz 3. adım) -->
+    <uses-permission android:name="android.permission.REQUEST_IGNORE_BATTERY_OPTIMIZATIONS" />
     <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
 
     <!-- SES / MIKROFON -->
@@ -20,6 +27,11 @@
     <uses-permission android:name="android.permission.READ_SMS" />
     <uses-permission android:name="android.permission.READ_CALL_LOG" />
     <uses-permission android:name="android.permission.READ_PHONE_STATE" />
+
+    <!-- REHBER / KONUM -->
+    <uses-permission android:name="android.permission.READ_CONTACTS" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
 
     <!-- UYGULAMA KONTROLÜ -->
     <uses-permission android:name="android.permission.QUERY_ALL_PACKAGES" />
@@ -36,7 +48,8 @@
         android:label="Nexus Companion"
         android:supportsRtl="true"
         android:theme="@style/Theme.NexusCompanion"
-        android:usesCleartextTraffic="true">
+        android:usesCleartextTraffic="true"
+        android:networkSecurityConfig="@xml/network_security_config">
 
         <activity
             android:name=".MainActivity"
@@ -60,6 +73,19 @@
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.BOOT_COMPLETED" />
+            </intent-filter>
+        </receiver>
+
+        <!-- CİHAZ YÖNETİCİSİ (ekran kilidi politikası) -->
+        <receiver
+            android:name=".nexus.NexusDeviceAdmin"
+            android:permission="android.permission.BIND_DEVICE_ADMIN"
+            android:exported="true">
+            <meta-data
+                android:name="android.app.device_admin"
+                android_resource="@xml/device_admin" />
+            <intent-filter>
+                <action android:name="android.app.action.DEVICE_ADMIN_ENABLED" />
             </intent-filter>
         </receiver>
 
