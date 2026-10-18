@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Nexus Companion</string>
+    <string name="status_server">Nexus HTTP Sunucusu</string>
+    <string name="status_stopped">DURDURULDU</string>
+    <string name="status_running">ÇALIŞIYOR (Port 8090)</string>
+    <string name="btn_start_server">Sunucu Başlat</string>
+    <string name="btn_check_permissions">İzinleri Kontrol Et</string>
+    <string name="btn_open_settings">Uygulama Ayarları</string>
+    <string name="desc_nexus">NEXUS AI Asistanı için Cihaz Köprüsü</string>
+</resources>

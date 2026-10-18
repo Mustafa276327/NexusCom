@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="16dp"
+    tools:context=".MainActivity">
+
+    <TextView
+        android:id="@+id/status_text"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Nexus HTTP Sunucusu: DURDURULDU"
+        android:textColor="@color/purple_500"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        android:layout_marginBottom="20dp"/>
+
+    <Button
+        android:id="@+id/btn_start_server"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Sunucu Başlat"
+        android:layout_marginBottom="10dp"/>
+
+    <Button
+        android:id="@+id/btn_check_permissions"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="İzinleri Kontrol Et"
+        android:layout_marginBottom="10dp"/>
+
+    <Button
+        android:id="@+id/btn_open_settings"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Uygulama Ayarları"
+        android:layout_marginBottom="20dp"/>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="NEXUS AI Asistanı Cihaz Köprüsü"
+        android:textColor="@color/purple_700"
+        android:textSize="14sp"
+        android:textStyle="italic"
+        android:gravity="center"/>
+
+</LinearLayout>
