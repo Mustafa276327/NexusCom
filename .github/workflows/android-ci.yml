@@ -30,6 +30,9 @@ jobs:
       - name: Android SDK lisanslarini kabul et
         run: yes | sdkmanager --licenses || true
 
+      - name: Gradle wrapper olustur
+        run: gradle wrapper
+
       - name: Gradle izni ver
         run: chmod +x ./gradlew
 
