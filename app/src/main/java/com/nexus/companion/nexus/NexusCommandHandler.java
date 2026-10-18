@@ -1,5 +1,7 @@
 package com.nexus.companion.nexus;
 
+import android.os.Bundle;
+import android.content.IntentFilter;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
