@@ -1,0 +1,42 @@
+name: Build Nexus Companion APK
+
+on:
+  push:
+    branches: [ main, master ]
+  pull_request:
+    branches: [ main, master ]
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Kod indir
+        uses: actions/checkout@v4
+
+      - name: JDK kur
+        uses: actions/setup-java@v4
+        with:
+          java-version: '17'
+          distribution: 'temurin'
+          cache: gradle
+
+      - name: Android SDK kur
+        uses: android-actions/setup-android@v3
+
+      - name: Gradle izni ver
+        run: chmod +x ./gradlew
+
+      - name: APK derle
+        run: ./gradlew assembleDebug
+
+      - name: APK dosyasını yayınla
+        uses: actions/upload-artifact@v4
+        with:
+          name: nexus-companion-apk
+          path: app/build/outputs/apk/debug/app-debug.apk
+          retention-days: 30
+
+      - name: APK boyutu göster
+        run: ls -lh app/build/outputs/apk/debug/app-debug.apk
